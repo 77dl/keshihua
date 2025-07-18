@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>全国气温数据可视化大屏平台</title>
+    <link rel="stylesheet" href="css/index.css" />
+    <!-- 提前加载重要资源 -->
+    <link rel="preload" href="js/echarts.min.js" as="script">
+    <link rel="preload" href="js/jquery.js" as="script">
+    <link rel="preload" href="js/china.js" as="script">
+    <link rel="preload" href="js/flexible.js" as="script">
+    <link rel="preload" href="js/time.js" as="script">
+    <link rel="preload" href="js/index.js" as="script">
+    <link rel="preload" href="js/rain.js" as="script">
+    <link rel="preload" href="js/meteor.js" as="script">
+</head>
+
+<body>
+    <!-- 下雨效果容器 -->
+    <div class="rain-container"></div>
+    <!-- 流星雨效果容器 -->
+    <div class="meteor-container"></div>
+    <!-- 云朵效果容器 -->
+    <div class="cloud-container"></div>
+
+    <!-- 头部 -->
+    <header>
+        <h1>全国气温数据可视化大屏平台</h1>
+        <div class="show-time"></div>
+        <!-- 新增省份选择下拉框 -->
+        <select id="province-select">
+            <option value="">全部地区</option>
+            <option value="北京">北京</option>
+            <option value="天津">天津</option>
+            <option value="河北">河北</option>
+            <option value="江苏">江苏</option>
+            <option value="广东">广东</option>
+            <option value="四川">四川</option>
+            <option value="黑龙江">黑龙江</option>
+        </select>
+    </header>
+
+    <!-- 页面主体 -->
+    <section class="mainbox">
+        <!-- 左侧盒子 -->
+        <div class="column">
+            <div class="panel bar">
+                <h2>各地区平均气温柱状图</h2>
+                <!-- 图表放置盒子 -->
+                <div class="chart"></div>
+                <!-- 伪元素绘制盒子下边角 -->
+                <div class="panel-footer"></div>
+            </div>
+            <div class="panel line">
+                <h2>气温变化折线图</h2>
+                <div class="chart"></div>
+                <div class="panel-footer"></div>
+            </div>
+            <!-- 新增左侧雷达图 -->
+            <div class="panel radar">
+                <h2>各地区气温雷达图</h2>
+                <div class="chart"></div>
+                <div class="panel-footer"></div>
+            </div>
+        </div>
+        <!-- 中间盒子 -->
+        <div class="column">
+            <div class="map">
+                <div class="map1"></div>
+                <div class="map2"></div>
+                <div class="map3"></div>
+                <div class="chart"></div>
+            </div>
+        </div>
+        <!-- 右侧盒子 -->
+        <div class="column">
+            <div class="panel pie">
+                <h2>气温区间分布饼图</h2>
+                <div class="chart"></div>
+                <div class="panel-footer"></div>
+            </div>
+            <!-- 新增右侧散点图 -->
+            <div class="panel scatter">
+                <h2>气温与湿度散点图</h2>
+                <div class="chart"></div>
+                <div class="panel-footer"></div>
+            </div>
+            <!-- 新增右侧仪表盘 -->
+            <div class="panel gauge">
+                <h2>气温达标率仪表盘</h2>
+                <div class="chart"></div>
+                <div class="panel-footer"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 引入脚本 -->
+    <script src="js/flexible.js"></script>
+    <script src="js/echarts.min.js"></script>
+    <script src="js/jquery.js"></script>
+    <!-- 引入china.js 完成地图模块 -->
+    <script src="js/china.js"></script>
+    <script src="js/time.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/rain.js"></script>
+    <script src="js/meteor.js"></script>
+    <script>
+        // 封装事件监听函数
+        function setupProvinceSelect() {
+            const select = document.getElementById('province-select');
+            select.addEventListener('change', function () {
+                const selectedProvince = this.value;
+                // 更新柱状图和折线图
+                if (typeof window.updateBarChart === 'function') {
+                    window.updateBarChart(selectedProvince);
+                }
+                if (typeof window.updateLineChart === 'function') {
+                    window.updateLineChart(selectedProvince);
+                }
+            });
+        }
+
+        // 等待 DOM 加载完成后执行
+        document.addEventListener('DOMContentLoaded', setupProvinceSelect);
+    </script>
+</body>
+
+</html>

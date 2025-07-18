@@ -1,0 +1,548 @@
+/* ===============
+   变量与基础样式
+   =============== */
+   :root {
+    --primary-color: #00eaff;
+    --secondary-color: #009eff;
+    --border-alpha: rgba(25, 186, 139, 0.17);
+    --text-gradient-start: #165DFF;
+    --text-gradient-end: #36D399;
+    --panel-bg: rgba(255, 255, 255, 0.03);
+    --bg-panel: rgba(255, 255, 255, 0.05);
+    --border-panel: rgba(255, 255, 255, 0.1);
+    --hover-shadow: 0 0 10px rgba(25, 186, 139, 0.5);
+    --font-size-title: 0.475rem;
+    --font-size-time: 0.25rem;
+    --spacing-sm: 0.125rem;
+    --spacing-md: 0.25rem;
+    --spacing-lg: 0.5rem;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --font-family: 'Open Sans', sans-serif; /* 新增字体家族变量 */
+    --text-color: #e0e0e0; /* 新增文本颜色变量 */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+li {
+    list-style: none;
+}
+
+/* ===============
+   字体与全局样式
+   =============== */
+@font-face {
+    font-family: electronicFont;
+    src: url("../font/DS-DIGIT.TTF") format("truetype");
+}
+
+body {
+    background: url("../images/bg.jpg") no-repeat top center;
+    line-height: 1.15;
+    color: var(--text-color); /* 修改文本颜色 */
+    font-family: var(--font-family); /* 修改字体家族 */
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 雨滴效果 */
+.rain-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.rain-drop {
+    position: absolute;
+    width: 2px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.6);
+    animation: rain-fall linear infinite;
+    /* 增加雨滴的随机性 */
+    animation-duration: calc(2s + 2 * var(--random-duration));
+    animation-delay: calc(2s * var(--random-delay));
+    left: calc(100% * var(--random-left));
+}
+
+@keyframes rain-fall {
+    0% {
+        transform: translateY(-20px);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
+
+/* ===============
+   头部样式
+   =============== */
+/* 标题居中 */
+header {
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    position: relative;
+    height: 1.25rem;
+    background: url("../images/head_bg.png") no-repeat;
+    background-size: 100% 100%;
+    transition: all 0.3s ease-in-out;
+    z-index: 1;
+}
+
+header h1 {
+    flex: 1; /* 占据剩余空间 */
+    text-align: center; /* 文本居中 */
+    font-size: var(--font-size-title);
+    line-height: 1rem;
+    background-image: linear-gradient(to right, var(--text-gradient-start), var(--text-gradient-end));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    font-family: var(--font-family);
+}
+
+/* 时间滑动样式 */
+header .show-time {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10%; /* 调整时间显示位置 */
+    line-height: 0.9375rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: var(--font-size-time);
+    font-family: var(--font-family);
+    white-space: nowrap; /* 防止文本换行 */
+}
+
+header select {
+    padding: 0.1rem 0.2rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    background-color: var(--panel-bg);
+    color: var(--text-color); /* 修改文本颜色 */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-family); /* 修改字体家族 */
+}
+
+header select:hover {
+    background-color: var(--bg-panel);
+}
+
+/* ===============
+   主体布局
+   =============== */
+.mainbox {
+    display: flex;
+    min-width: 1024px;
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: var(--spacing-sm) var(--spacing-md) 0;
+    gap: var(--spacing-md);
+    background-color: rgba(255, 255, 255, 0.03);
+    border-radius: var(--radius-md);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease-in-out;
+    z-index: 1;
+}
+
+.mainbox .column {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.mainbox .column:nth-child(2) {
+    flex: 5;
+    padding: var(--spacing-sm);
+    background-color: rgba(255, 255, 255, 0.02);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.mainbox .column:nth-child(2):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 255, 255, 0.1);
+}
+
+/* 中等屏幕（1280px） */
+@media (max-width: 1280px) {
+    .mainbox {
+        flex-wrap: wrap;
+        padding: var(--spacing-sm);
+    }
+
+    .mainbox .column:nth-child(2) {
+        flex: 4;
+    }
+}
+
+/* 小屏幕（1024px） */
+@media (max-width: 1024px) {
+    .mainbox {
+        min-width: 768px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .mainbox .column {
+        width: 100%;
+    }
+
+    .mainbox .column:nth-child(2) {
+        flex: 1;
+        margin-bottom: var(--spacing-md);
+    }
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .mainbox {
+        padding: var(--spacing-sm);
+    }
+
+    .mainbox .column {
+        flex: 1;
+    }
+
+    .mainbox .column:nth-child(2) {
+        margin-bottom: var(--spacing-sm);
+    }
+}
+
+/* ===============
+   面板样式
+   =============== */
+.panel {
+    position: relative;
+    padding: var(--spacing-md) var(--spacing-sm) var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    height: 3.875rem;
+    border: 1px solid var(--border-alpha);
+    background: url("../images/line1.png") var(--panel-bg);
+    border-radius: var(--radius-md);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    z-index: 1;
+    /* 增强面板的悬停效果 */
+    transform-origin: center center;
+}
+
+.panel:hover {
+    transform: scale(1.05) rotate(1deg);
+    box-shadow: var(--hover-shadow);
+    background-color: var(--bg-panel);
+}
+
+.panel::before,
+.panel::after,
+.panel .panel-footer::before,
+.panel .panel-footer::after {
+    content: " ";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-color: var(--primary-color);
+    border-style: solid;
+}
+
+.panel::before {
+    top: 0;
+    left: 0;
+    border-left-width: 2px;
+    border-top-width: 2px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.panel::after {
+    top: 0;
+    right: 0;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-left: none;
+    border-bottom: none;
+}
+
+.panel .panel-footer::before {
+    bottom: 0;
+    left: 0;
+    border-left-width: 2px;
+    border-bottom-width: 2px;
+    border-top: none;
+    border-right: none;
+}
+
+.panel .panel-footer::after {
+    bottom: 0;
+    right: 0;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-top: none;
+    border-left: none;
+}
+
+.panel h2 {
+    height: 0.6rem;
+    color: var(--text-color); /* 修改文本颜色 */
+    line-height: 0.6rem;
+    text-align: center;
+    font-size: 0.25rem;
+    font-weight: 400;
+    font-family: var(--font-family); /* 修改字体家族 */
+}
+
+.panel h2 a {
+    color: var(--text-color); /* 修改文本颜色 */
+    text-decoration: none;
+    margin: 0 var(--spacing-sm);
+    font-family: var(--font-family); /* 修改字体家族 */
+}
+
+.panel .chart {
+    height: 3rem;
+}
+
+/* ===============
+   列表模块
+   =============== */
+.no {
+    background: rgba(101, 132, 226, 0.1);
+    padding: var(--spacing-md);
+}
+
+.no .no-hd {
+    position: relative;
+    border: 1px solid var(--border-alpha);
+}
+
+.no .no-hd::before,
+.no .no-hd::after {
+    content: " ";
+    position: absolute;
+    width: 30px;
+    height: 10px;
+    border-color: var(--primary-color);
+    border-style: solid;
+}
+
+.no .no-hd::before {
+    top: 0;
+    left: 0;
+    border-left-width: 2px;
+    border-top-width: 2px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.no .no-hd::after {
+    bottom: 0;
+    right: 0;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-top: none;
+    border-left: none;
+}
+
+.no .no-hd ul {
+    display: flex;
+}
+
+.no .no-hd ul li {
+    position: relative;
+    flex: 1;
+    line-height: 1rem;
+    font-size: 0.875rem;
+    color: #ffeb7b;
+    text-align: center;
+    font-family: "electronicFont";
+}
+
+.no .no-hd ul li::after {
+    content: "";
+    position: absolute;
+    top: 25%;
+    right: 0;
+    height: 60%;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.no .no-bd ul {
+    display: flex;
+}
+
+.no .no-bd ul li {
+    flex: 1;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.225rem;
+    height: 0.5rem;
+    line-height: 0.5rem;
+    padding-top: var(--spacing-sm);
+    font-family: var(--font-family); /* 修改字体家族 */
+}
+
+/* ===============
+   地图模块
+   =============== */
+.map {
+    position: relative;
+    height: 10.125rem;
+    transition: all 0.3s ease-in-out;
+    z-index: 1;
+}
+
+.map .centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.map .map1 {
+    width: 6.475rem;
+    height: 6.475rem;
+    background: url("../images/map.png");
+    background-size: 100% 100%;
+    opacity: 0.3;
+}
+
+.map .map2 {
+    width: 8.0375rem;
+    height: 8.0375rem;
+    background: url("../images/lbx.png");
+    animation: rotate1 12s linear infinite;
+    opacity: 0.6;
+    background-size: 100% 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.map .map3 {
+    width: 7.075rem;
+    height: 7.075rem;
+    background: url("../images/jt.png");
+    animation: rotate2 8s linear infinite;
+    opacity: 0.6;
+    background-size: 100% 100%;
+}
+
+.map .chart {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10.125rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.map .chart:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.5); /* 鼠标悬停时光影效果增强 */
+}
+.meteor-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.meteor {
+  position: absolute;
+  width: 2px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  transform-origin: top left;
+  animation: meteor-fall linear infinite;
+}
+.cloud {
+    position: absolute;
+    width: 200px;
+    height: 100px;
+    background: url("../images/cloud.png"); /* 替换为你的云朵图片路径 */
+    background-size: 100% 100%;
+    opacity: 0.8;
+    animation: cloud-move linear infinite;
+}
+
+@keyframes cloud-move {
+    0% {
+        transform: translateX(-200px);
+    }
+    100% {
+        transform: translateX(100vw);
+    }
+}
+
+/* 随机设置云朵的位置、动画时长和延迟 */
+.cloud:nth-child(1) {
+    top: 10%;
+    animation-duration: 30s;
+    animation-delay: 0s;
+}
+
+.cloud:nth-child(2) {
+    top: 20%;
+    animation-duration: 40s;
+    animation-delay: 5s;
+}
+
+.cloud:nth-child(3) {
+    top: 30%;
+    animation-duration: 35s;
+    animation-delay: 10s;
+}
+
+/* 可以根据需要添加更多的云朵 */
+@keyframes meteor-fall {
+  0% {
+      transform: translate(0, 0) rotate(45deg);
+      opacity: 1;
+  }
+  100% {
+      transform: translate(100vw, 100vh) rotate(45deg);
+      opacity: 0;
+  }
+}
+@keyframes rotate1 {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes rotate2 {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(-360deg);
+    }
+}

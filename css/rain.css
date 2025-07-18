@@ -1,0 +1,31 @@
+/* 全国温度可视化大屏更新版(1)/css/rain.css */
+.rain-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.rain-drop {
+  position: absolute;
+  width: 1px;
+  height: 10px;
+  /* 保留默认颜色，后续会被 JavaScript 覆盖 */
+  background: rgba(255, 255, 255, 0.8);
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  0% {
+      transform: translateY(-10px);
+      opacity: 0.8;
+  }
+  100% {
+      transform: translateY(100vh);
+      opacity: 0;
+  }
+}
